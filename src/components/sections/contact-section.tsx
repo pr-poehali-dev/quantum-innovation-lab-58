@@ -1,34 +1,38 @@
-import { Mail, MapPin } from "lucide-react"
 import { useReveal } from "@/hooks/use-reveal"
-import { useState, type FormEvent } from "react"
 import { MagneticButton } from "@/components/magnetic-button"
+
+const FUN_FACTS = [
+  {
+    emoji: "🎂",
+    title: "День π",
+    text: "14 марта (3/14) — официальный День числа Пи. В этот день родился Альберт Эйнштейн.",
+  },
+  {
+    emoji: "🧠",
+    title: "Мировой рекорд памяти",
+    text: "Акиро Харагути (Япония) устно воспроизвёл 111 700 знаков π — это заняло 16 часов.",
+  },
+  {
+    emoji: "🎵",
+    title: "Музыка из π",
+    text: "Композиторы создают музыку, превращая цифры π в ноты. Существуют целые симфонии!",
+  },
+  {
+    emoji: "🌌",
+    title: "Везде во Вселенной",
+    text: "π встречается в квантовой механике, теории относительности и ДНК. Природа «любит» π.",
+  },
+  {
+    emoji: "📐",
+    title: "Нормальность π",
+    text: "Предполагается, что каждая последовательность цифр встречается в π одинаково часто.",
+  },
+]
+
+const PI_DIGITS = "3.14159265358979323846264338327950288419716939937510582097494459230781640628620899"
 
 export function ContactSection() {
   const { ref, isVisible } = useReveal(0.3)
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
-      return
-    }
-
-    setIsSubmitting(true)
-
-    // Simulate form submission (replace with actual API call later)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    setIsSubmitting(false)
-    setSubmitSuccess(true)
-    setFormData({ name: "", email: "", message: "" })
-
-    // Reset success message after 5 seconds
-    setTimeout(() => setSubmitSuccess(false), 5000)
-  }
 
   return (
     <section
@@ -36,142 +40,69 @@ export function ContactSection() {
       className="flex h-screen w-screen shrink-0 snap-start items-center px-4 pt-20 md:px-12 md:pt-0 lg:px-16"
     >
       <div className="mx-auto w-full max-w-7xl">
-        <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:gap-16 lg:gap-24">
+        <div className="grid gap-8 md:grid-cols-[1fr_1.2fr] md:gap-12 lg:gap-20">
+          {/* Left — Title + digits */}
           <div className="flex flex-col justify-center">
             <div
-              className={`mb-6 transition-all duration-700 md:mb-12 ${
+              className={`mb-6 transition-all duration-700 md:mb-10 ${
                 isVisible ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"
               }`}
             >
-              <h2 className="mb-2 font-sans text-4xl font-light leading-[1.05] tracking-tight text-foreground md:mb-3 md:text-7xl lg:text-8xl">
-                Давайте
+              <h2 className="mb-2 font-sans text-4xl font-light leading-[1.05] tracking-tight text-foreground md:text-6xl lg:text-7xl">
+                Сегодня
                 <br />
-                поговорим
+                и всегда
               </h2>
-              <p className="font-mono text-xs text-foreground/60 md:text-base">/ Свяжитесь с нами</p>
+              <p className="font-mono text-xs text-foreground/60 md:text-sm">/ π в современном мире</p>
             </div>
 
-            <div className="space-y-4 md:space-y-8">
-              <a
-                href="mailto:info@flowrise.dev"
-                className={`group block transition-all duration-700 ${
-                  isVisible ? "translate-x-0 opacity-100" : "-translate-x-16 opacity-0"
-                }`}
-                style={{ transitionDelay: "200ms" }}
-              >
-                <div className="mb-1 flex items-center gap-2">
-                  <Mail className="h-3 w-3 text-foreground/60" />
-                  <span className="font-mono text-xs text-foreground/60">Email</span>
-                </div>
-                <p className="text-base text-foreground transition-colors group-hover:text-foreground/70 md:text-2xl">
-                  info@flowrise.dev
+            <div
+              className={`transition-all duration-700 ${
+                isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
+              }`}
+              style={{ transitionDelay: "200ms" }}
+            >
+              <p className="mb-4 text-sm leading-relaxed text-foreground/80 md:text-base">
+                Число π используется везде: в GPS, в МРТ-сканерах, в расчётах орбит спутников и в алгоритмах
+                шифрования. Без π невозможна современная цивилизация.
+              </p>
+              <div className="overflow-hidden rounded-lg border border-foreground/15 bg-foreground/5 p-3 backdrop-blur-sm md:p-4">
+                <p className="mb-1 font-mono text-xs text-foreground/40">Первые 80 знаков π</p>
+                <p className="break-all font-mono text-xs leading-relaxed text-foreground/70 md:text-sm">
+                  {PI_DIGITS}
                 </p>
-              </a>
-
-              <div
-                className={`transition-all duration-700 ${
-                  isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
-                }`}
-                style={{ transitionDelay: "350ms" }}
-              >
-                <div className="mb-1 flex items-center gap-2">
-                  <MapPin className="h-3 w-3 text-foreground/60" />
-                  <span className="font-mono text-xs text-foreground/60">Локация</span>
-                </div>
-                <p className="text-base text-foreground md:text-2xl">Москва, Россия</p>
               </div>
+            </div>
 
-              <div
-                className={`flex gap-2 pt-2 transition-all duration-700 md:pt-4 ${
-                  isVisible ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
-                }`}
-                style={{ transitionDelay: "500ms" }}
-              >
-                {["Telegram", "VK", "LinkedIn", "GitHub"].map((social) => (
-                  <a
-                    key={social}
-                    href="#"
-                    className="border-b border-transparent font-mono text-xs text-foreground/60 transition-all hover:border-foreground/60 hover:text-foreground/90"
-                  >
-                    {social}
-                  </a>
-                ))}
-              </div>
+            <div
+              className={`mt-6 flex flex-wrap gap-3 transition-all duration-700 ${
+                isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+              }`}
+              style={{ transitionDelay: "400ms" }}
+            >
+              <MagneticButton variant="primary" size="lg">
+                π в науке и технике
+              </MagneticButton>
             </div>
           </div>
 
-          {/* Right side - Minimal form */}
-          <div className="flex flex-col justify-center">
-            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+          {/* Right — Fun facts */}
+          <div className="flex flex-col justify-center space-y-4 md:space-y-5">
+            {FUN_FACTS.map((fact, i) => (
               <div
-                className={`transition-all duration-700 ${
+                key={i}
+                className={`group flex items-start gap-4 rounded-xl border border-foreground/10 p-4 transition-all duration-700 hover:border-foreground/25 hover:bg-foreground/5 md:p-5 ${
                   isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
                 }`}
-                style={{ transitionDelay: "200ms" }}
+                style={{ transitionDelay: `${200 + i * 100}ms` }}
               >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Имя</label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
-                  placeholder="Ваше имя"
-                />
+                <span className="text-2xl">{fact.emoji}</span>
+                <div>
+                  <h3 className="mb-1 font-sans text-sm font-medium text-foreground md:text-base">{fact.title}</h3>
+                  <p className="text-xs leading-relaxed text-foreground/65 md:text-sm">{fact.text}</p>
+                </div>
               </div>
-
-              <div
-                className={`transition-all duration-700 ${
-                  isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
-                }`}
-                style={{ transitionDelay: "350ms" }}
-              >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Email</label>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
-                  placeholder="your@email.com"
-                />
-              </div>
-
-              <div
-                className={`transition-all duration-700 ${
-                  isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
-                }`}
-                style={{ transitionDelay: "500ms" }}
-              >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Сообщение</label>
-                <textarea
-                  rows={3}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  required
-                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
-                  placeholder="Расскажите о вашем проекте..."
-                />
-              </div>
-
-              <div
-                className={`transition-all duration-700 ${
-                  isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
-                }`}
-                style={{ transitionDelay: "650ms" }}
-              >
-                <MagneticButton
-                  variant="primary"
-                  size="lg"
-                  className="w-full disabled:opacity-50"
-                >
-                  {isSubmitting ? "Отправка..." : "Отправить"}
-                </MagneticButton>
-                {submitSuccess && (
-                  <p className="mt-3 text-center font-mono text-sm text-foreground/80">Сообщение отправлено!</p>
-                )}
-              </div>
-            </form>
+            ))}
           </div>
         </div>
       </div>
